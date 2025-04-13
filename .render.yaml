@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: userapp-backend
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port 10000"
+    envVars:
+      - key: DB_HOST
+        value: your-db-host
+      - key: DB_NAME
+        value: your-db-name
+      - key: DB_USER
+        value: your-db-user
+      - key: DB_PASS
+        value: your-db-pass
+    plan: free
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - server/**
+
+  - type: web
+    name: userapp-frontend
+    env: static
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: client/build
+    plan: free
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - client/**
