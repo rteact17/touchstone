@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const serverUrl = 'https://touchstoneserve.onrender.com';
+// const serverUrl = 'http://127.0.0.1:8000';
+
 const App = () => {
   const [form, setForm] = useState({ firstname: '', lastname: '', email: '', phone: '' });
   const [users, setUsers] = useState([]);
@@ -11,13 +14,13 @@ const App = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://127.0.0.1:8000/users', form);
+    await axios.post(`${serverUrl}/users`, form);
     fetchUsers();
     setForm({ firstname: '', lastname: '', email: '', phone: '' });
   };
 
   const fetchUsers = async () => {
-    const res = await axios.get('http://127.0.0.1:8000/users');
+    const res = await axios.get(`${serverUrl}/users`);
     setUsers(res.data);
   };
 
